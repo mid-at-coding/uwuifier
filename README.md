@@ -4,7 +4,7 @@ make your sentences uwu
 
 # install 
 
-download the repository and run
+clone the repository and run
 `sh install.sh`
 
 then use 
