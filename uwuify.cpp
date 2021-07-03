@@ -23,29 +23,70 @@ bool IsLetter(char in){
   if(in >= 'A' && in <= 'Z'){return true;}
   return false;
 }
+bool IsVowelOrW(char in){
+  char c = tolower(in);
+  if(!IsVowel(c) && c != 'l' && c != 'r' && c != ' ' && c != 'w'){
+    return false;
+  }
+  return true;
+}
 void uwu(char in, char next,char before = ' '){
   switch (tolower(in)) {
-    case 'o' :
-      if(!IsVowel(before) && before != ' '){
-        cout<<"wo";
+    case 'c' :
+      if(next == 'k'){
+        cout<<MatchCase('k',in);
+      }
+      else if(before == ' '){
+        cout<<MatchCase('k',in);
       }
       else{
-        cout<<"o";
+        cout<<MatchCase('c',in);
+      }
+      break;
+    case 'k' :
+      if(before == 'c'){
+        break;
+      }
+      else{
+        cout<<MatchCase('k',in);
+      }
+      break;
+    case 's' :
+      if(next == ' '){
+        cout<<MatchCase('z',in);
+      }
+      else{
+        cout<<MatchCase('s',in);
+      }
+      break;
+    case 'o' :
+      if(!IsVowelOrW(before) && next != ' '){
+        cout<<"wo";
+      }
+      else if(!IsVowel(before) && next == ' '){
+        cout<<"ow";
+      }
+      else if(IsVowel(before) && !IsVowel(next)){
+        cout<<"ow";
+      }
+      else{
+        cout<<MatchCase('o',in);
       }
       break;
     case 'l' :
     case 'r' :
-      cout<<MatchCase('w',in);
+      if(before != MatchCase('l',before) && before != MatchCase('r',before) && next != MatchCase('l',next) && next != MatchCase('r',next) && next != ' '){
+        cout<<MatchCase('w',in);
+        break;
+      }
+      cout<<in;
       break;
     case 'a' :
-      if(before == ' '){
-        cout<<MatchCase('a',in);
-      }
-      else if(!IsVowel(before)){
+      if(!IsVowelOrW(before)){
         cout<<"wa";
       }
       else{
-        cout<<"a";
+        cout<<MatchCase('a',in);
       }
       break;
     case 't' :
@@ -68,6 +109,9 @@ void uwu(char in, char next,char before = ' '){
       if(next == ' ' && before == MatchCase('l',before)){
         cout<<"el";
       }
+      else if(!IsVowel(before) && before != MatchCase('s',before)){
+        cout<<"we";
+      }
       else{
         cout<<MatchCase('e',in);
       }
@@ -75,6 +119,13 @@ void uwu(char in, char next,char before = ' '){
     default :
       cout<<in;
   }
+}
+bool TheToDa(char in, char next, char after){
+  if(in == MatchCase('t',in) && next == MatchCase('h',next) && after == MatchCase('e',after)){
+    cout<<MatchCase('d',in)<<MatchCase('a',after);
+    return true;
+  }
+  return false;
 }
 bool ixeToiex(char in, char next, char after){
   if(tolower(in) == 'i' && tolower(after) == 'e' && IsLetter(next)){
@@ -97,6 +148,9 @@ void NoArgs(){
       if(ixeToiex(in[i],in[i+1],in[i+2])){
         i += 3;
       }
+      if(TheToDa(in[i],in[i+1],in[i+2])){
+        i += 3;
+      }
       if(!i){
           uwu(in[i],in[i + 1]);
       }
@@ -113,7 +167,7 @@ int main(int argc, char** argv){
   }
   for(int k = 1; k < argc; k++){
      for(int i = 0; i < strlen(argv[k]); i++){
-       if(ixeToiex(argv[k][i],argv[k][i+1],argv[k][i+2])){
+       if(ixeToiex(argv[k][i],argv[k][i+1],argv[k][i+2]) || TheToDa(argv[k][i],argv[k][i+1],argv[k][i+2])){
          i += 3;
        }
        if(!i){
@@ -125,5 +179,6 @@ int main(int argc, char** argv){
      }
 		 cout<<" ";
    }
+   ending();
    cout<<endl;
 }
